@@ -6,7 +6,7 @@ on:
     types: [closed]
 jobs:
   ac15-dv01-ImageServer-configfile-update:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
