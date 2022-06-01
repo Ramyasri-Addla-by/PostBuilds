@@ -21,3 +21,4 @@ jobs:
         with:
           keyvault: "kv-rg-ac15-01-dv-euw-01"
           secrets: 'azure-infra-resource-group-name, azure-infra-storage-acct-name, azure-infra-storage-acct-key, azure-kuberenetes-service-name'
+        id: myGetSecretAction
