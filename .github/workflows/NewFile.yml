@@ -1,0 +1,16 @@
+name: Updating IntactixImageServer.config file.
+on:
+  push:
+    paths:
+    - 'workloads/ac15/dv01/custom-config/imageserver/IntactixImageServer.config'
+    types: [closed]
+jobs:
+  ac15-dv01-ImageServer-configfile-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
