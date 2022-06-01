@@ -22,3 +22,10 @@ jobs:
           keyvault: "kv-rg-ac15-01-dv-euw-01"
           secrets: 'azure-infra-resource-group-name, azure-infra-storage-acct-name, azure-infra-storage-acct-key, azure-kuberenetes-service-name'
         id: myGetSecretAction
+      - name: Set context for Azure Kubernetes Service
+        uses: azure/aks-set-context@v1
+        with:
+            creds: '${{ secrets.AZURE_CREDENTIALS }}'
+            resource-group: '${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }}'
+            cluster-name: '${{ steps.myGetSecretAction.outputs.azure-kuberenetes-service-name }}'
+        id: login
