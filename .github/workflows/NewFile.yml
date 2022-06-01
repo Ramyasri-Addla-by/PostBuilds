@@ -32,3 +32,10 @@ jobs:
       - name: Install kubectl
         run: |
           sudo snap install kubectl --classic
+      - name: Uploading IntactixImageServer.config File to the Azure File Storage.
+        uses: azure/CLI@v1   
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            chmod +x $GITHUB_WORKSPACE
+            az storage file upload --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }} --account-key ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-key }} --share-name imageconfigfile-dv01 --source $GITHUB_WORKSPACE/workloads/ac15/dv01/custom-config/imageserver/IntactixImageServer.config
