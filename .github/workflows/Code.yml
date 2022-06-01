@@ -1,0 +1,55 @@
+name: Updating IntactixImageServer.config file.
+on:
+  push:
+    paths:
+    - 'workloads/ac15/dv01/custom-config/imageserver/IntactixImageServer.config'
+    types: [closed]
+jobs:
+  ac15-dv01-ImageServer-configfile-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+      - name: "Login to Azure"
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: "Get Secrets From Azure Key Vault"
+        uses: Azure/get-keyvault-secrets@v1.0
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        with:
+          keyvault: "kv-rg-ac15-01-dv-euw-01"
+          secrets: 'azure-infra-resource-group-name, azure-infra-storage-acct-name, azure-infra-storage-acct-key, azure-kuberenetes-service-name'
+        id: myGetSecretAction
+      - name: Set context for Azure Kubernetes Service
+        uses: azure/aks-set-context@v1
+        with:
+            creds: '${{ secrets.AZURE_CREDENTIALS }}'
+            resource-group: '${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }}'
+            cluster-name: '${{ steps.myGetSecretAction.outputs.azure-kuberenetes-service-name }}'
+        id: login
+      - name: Install kubectl
+        run: |
+          sudo snap install kubectl --classic
+      - name: Deleting IntactixImageServer.config File From the Azure File Storage.
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            az storage file delete --path IntactixImageServer.config --share-name imageconfigfile-dv01 --account-key  ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-key }} --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }}
+      - name: Uploading IntactixImageServer.config File to the Azure File Storage.
+        uses: azure/CLI@v1   
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            chmod +x $GITHUB_WORKSPACE
+            az storage file upload --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }} --account-key ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-key }} --share-name imageconfigfile-dv01 --source $GITHUB_WORKSPACE/workloads/ac15/dv01/custom-config/imageserver/IntactixImageServer.config
+      - name: Pause for 1 minutes
+        run: |
+          sleep 60s
+      - name: Query the VM Scale Set Instance id and Invoke the Command.
+        shell: pwsh
+        run: |
+          $vmssinstanceId=az vmss list-instances -g ${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }} -n ${{ steps.myGetSecretAction.outputs.azure-vmss-sp-name }} --query "[].[instanceId]" -o tsv
+          az vmss run-command invoke --command-id RunPowerShellScript -n ${{ steps.myGetSecretAction.outputs.azure-vmss-sp-name }} -g ${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }} --scripts "@workloads\ac15\dv02\custom-config\spaceplanning\diagnostics\spw-communication-trace.ps1" --instance-id $vmssinstanceId[0]
