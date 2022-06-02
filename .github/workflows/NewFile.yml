@@ -28,7 +28,7 @@ jobs:
             creds: '${{ secrets.AZURE_CREDENTIALS }}'
             resource-group: '${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }}'
             cluster-name: '${{ steps.myGetSecretAction.outputs.azure-kuberenetes-service-name }}'
-        id: login
+        id: logins
       - name: Install kubectl
         run: |
           sudo snap install kubectl --classic
