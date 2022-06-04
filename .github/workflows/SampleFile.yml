@@ -13,3 +13,6 @@ jobs:
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
         enable-AzPSSession: true 
+
+    - name: "Uploading file to storage account"
+      run: azcopy copy 'C:\ImageServer\ImageServerFile.config' 'https://csg100320017998846f.dfs.core.windows.net/fileupload/ImageServerFile.config'
