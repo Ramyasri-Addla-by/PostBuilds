@@ -13,7 +13,7 @@ jobs:
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
         enable-AzPSSession: true 
-
-    - name: "Uploading file to storage account"
+    - name: RunPowerShellScript
       shell: pwsh
-      run: azcopy copy "C:\ImageServer\ImageServerFile.config" "csg100320017998846f.blob.core.windows.net/fileupload>?sp=racw&st=2022-06-04T19:51:59Z&se=2022-06-07T03:51:59Z&spr=https&sv=2020-08-04&sr=c&sig=7UCKY1BedlFYGQESGBJp1XeWodZe1snBGKbEHAxLjHU%3D"
+      run: |
+        .\Powershell.ps1
