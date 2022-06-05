@@ -16,4 +16,4 @@ jobs:
     - name: RunPowerShellScript
       shell: pwsh
       run: |
-        C:\ImageServer\PostBuilds\.github\workflows\Powershell.ps1
+        PostBuilds/.github/workflows/TestPowershell.ps1
