@@ -17,4 +17,4 @@ $FullUrl = "$Url$Sas"
 #Copy-Item "C:\DownloadedFile\ImageServerFile.config" -Destination "C:\Intactix\ImageServer"
 
 #Restart WebAppPool
-Start-WebAppPool -Name "IKBAppPool"
+#Start-WebAppPool -Name "IKBAppPool"
