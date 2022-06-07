@@ -27,7 +27,7 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            az storage file delete --path IntactixImageServer.config --share-name imageconfigfile-dv01 --account-key  ${{ steps.myGetSecretAction.outputs.access-key }} --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }}
+            az storage file delete --path IntactixImageServer.config --share-name imageserver --account-key  ${{ steps.myGetSecretAction.outputs.access-key }} --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }}
 
       
 
