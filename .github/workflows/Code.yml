@@ -11,10 +11,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "Login to Azure"
-        uses: Azure/login@v1
+      - name: Set the Subscription
+        uses: azure/CLI@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true 
+
+          azcliversion: 2.30.0
+
+          inlineScript: |
+
+            az account set --subscription 84b819d9-03ac-4d5a-8b02-0f8cee4c823b
+
+      
 
      
