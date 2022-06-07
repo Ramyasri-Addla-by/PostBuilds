@@ -1,7 +1,5 @@
 name: Updating IntactixImageServer.config file.
 on: [push]
-   
-    
 jobs:
    build:
     runs-on: windows-latest
@@ -11,15 +9,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set the Subscription
-        uses: azure/CLI@v1
+      - name: "Login to Azure"
+        uses: Azure/login@v1
         with:
-
-          azcliversion: 2.30.0
-
-          inlineScript: |
-
-            az account set --subscription 84b819d9-03ac-4d5a-8b02-0f8cee4c823b
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       
 
