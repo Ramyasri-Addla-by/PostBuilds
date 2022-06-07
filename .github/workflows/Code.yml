@@ -1,8 +1,8 @@
 name: Updating IntactixImageServer.config file.
 on:
   push:
-    paths: 
-    - 'workloads/imageserver/IntactixImageServer.config'
+    #paths: 
+    #- 'workloads/imageserver/IntactixImageServer.config'
 
 jobs:
    build:
