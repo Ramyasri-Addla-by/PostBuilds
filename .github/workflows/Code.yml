@@ -3,17 +3,21 @@ on:
   push:
     paths:
     - 'workloads/ac15/dv01/custom-config/imageserver/IntactixImageServer.config'
-    types: [closed]
+    
 jobs:
-  ac15-dv01-ImageServer-configfile-update:
-    runs-on: ubuntu-latest
+   build:
+    runs-on: windows-latest
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
       - name: "Login to Azure"
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: "Get Secrets From Azure Key Vault"
         uses: Azure/get-keyvault-secrets@v1.0
         env:
