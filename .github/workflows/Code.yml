@@ -1,8 +1,6 @@
 name: Updating IntactixImageServer.config file.
-on:
-  push:
-    paths:
-    - 'workloads/ac15/dv01/custom-config/imageserver/IntactixImageServer.config'
+on: [push]
+   
     
 jobs:
    build:
@@ -17,13 +15,6 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true 
 
-      - name: "Get Secrets From Azure Key Vault"
-        uses: Azure/get-keyvault-secrets@v1.0
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-        with:
-          keyvault: "kv-rg-ac15-01-dv-euw-01"
-          secrets: 'azure-infra-resource-group-name, azure-infra-storage-acct-name, azure-infra-storage-acct-key, azure-kuberenetes-service-name'
-        id: myGetSecretAction
-      
+     
