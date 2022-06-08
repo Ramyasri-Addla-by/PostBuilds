@@ -42,5 +42,5 @@ jobs:
           azcliversion: 2.30.0
           inlineScript: |
             chmod +x $GITHUB_WORKSPACE
-            az storage file upload --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }} --account-key ${{ steps.myGetSecretAction.outputs.access-key }} --share-name imageserver --path intactixImageServer.config --source $GITHUB_WORKSPACE/workloads/imageserver/IntactixImageServer.config
+            az storage file upload --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }} --account-key ${{ steps.myGetSecretAction.outputs.access-key }} --share-name imageserver --path IntactixImageServer.config --source $GITHUB_WORKSPACE/workloads/imageserver/IntactixImageServer.config
      
