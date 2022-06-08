@@ -47,6 +47,7 @@ jobs:
       - name: Query the VM Scale Set Instance id and Invoke the Command.
         shell: pwsh
         run: |
-          $vmssinstanceId=az vmss list-instances -g ${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }} -n ${{ steps.myGetSecretAction.outputs.azure-vmss-name }} --query "[].[instanceId]" -o tsv
-          az vmss run-command invoke --command-id RunPowerShellScript -n ${{ steps.myGetSecretAction.outputs.azure-vmss-name }} -g ${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }} --scripts "@workloads\ImageserverPwrscrpt\Powershell.ps1" --instance-id $vmssinstanceId[0]
+          az vm show -n Vmss1 -g ResourceGroupName rg1
+         # $vmssinstanceId=az vmss list-instances -g ${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }} -n ${{ steps.myGetSecretAction.outputs.azure-vmss-name }} --query "[].[instanceId]" -o tsv
+         # az vmss run-command invoke --command-id RunPowerShellScript -n ${{ steps.myGetSecretAction.outputs.azure-vmss-name }} -g ${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }} --scripts "@workloads\ImageserverPwrscrpt\Powershell.ps1" --instance-id $vmssinstanceId[0]
 
