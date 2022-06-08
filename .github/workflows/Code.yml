@@ -25,7 +25,7 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         with:
           keyvault: "kv136"
-          secrets: 'azure-infra-resource-group-name, azure-infra-storage-acct-name, access-key'
+          secrets: 'azure-infra-resource-group-name, azure-infra-storage-acct-name, access-key, azure-vmss-name'
         id: myGetSecretAction
       - name: Deleting IntactixImageServer.config File From the Azure File Storage.
         uses: azure/CLI@v1
