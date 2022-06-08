@@ -41,7 +41,7 @@ jobs:
           inlineScript: |
             chmod +x $GITHUB_WORKSPACE
             az storage file upload --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }} --account-key ${{ steps.myGetSecretAction.outputs.access-key }} --share-name imageserver --path IntactixImageServer.config --source $GITHUB_WORKSPACE/workloads/imageserver/IntactixImageServer.config
-      - name: Pause for 1 minutes
+      - name: Pause for 1 minute
         run: |
           sleep 60s
       - name: Query the VM Scale Set Instance id and Invoke the Command.
