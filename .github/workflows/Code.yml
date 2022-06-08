@@ -36,7 +36,7 @@ jobs:
          # inlineScript: |
           #  az storage file delete --paths IntactixImageServer.config --share-name imageserver --account-key  ${{ steps.myGetSecretAction.outputs.access-key }} --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }}
  
-      - name: Uploading IntactixImageServer.config File to the Azure File Storage.
+      - name: Upload IntactixImageServer.config File to the Azure File Storage.
         uses: azure/CLI@v1   
         with:
           azcliversion: 2.30.0
