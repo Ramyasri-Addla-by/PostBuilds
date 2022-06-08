@@ -27,10 +27,13 @@ jobs:
           keyvault: "kv136"
           secrets: 'azure-infra-resource-group-name, azure-infra-storage-acct-name, access-key'
         id: myGetSecretAction
-      
-
-      
- 
+      - name: Deleting IntactixImageServer.config File From the Azure File Storage.
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+           az storage file delete --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }} --account-key ${{ steps.myGetSecretAction.outputs.access-key }} --share-name imageserver --path IntactixImageServer.config 
+  
       - name: Uploading IntactixImageServer.config File to the Azure File Storage.
         uses: azure/CLI@v1   
         with:
@@ -38,10 +41,12 @@ jobs:
           inlineScript: |
             chmod +x $GITHUB_WORKSPACE
             az storage file upload --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }} --account-key ${{ steps.myGetSecretAction.outputs.access-key }} --share-name imageserver --path IntactixImageServer.config --source $GITHUB_WORKSPACE/workloads/imageserver/IntactixImageServer.config
-     
-      - name: Deleting IntactixImageServer.config File From the Azure File Storage.
-        uses: azure/CLI@v1
-        with:
-          azcliversion: 2.30.0
-          inlineScript: |
-           az storage file delete --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }} --account-key ${{ steps.myGetSecretAction.outputs.access-key }} --share-name imageserver --path IntactixImageServer.config 
+      - name: Pause for 1 minutes
+        run: |
+          sleep 60s
+      - name: Query the VM Scale Set Instance id and Invoke the Command.
+        shell: pwsh
+        run: |
+          $vmssinstanceId=az vmss list-instances -g ${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }} -n ${{ steps.myGetSecretAction.outputs.azure-vmss-name }} --query "[].[instanceId]" -o tsv
+          az vmss run-command invoke --command-id RunPowerShellScript -n ${{ steps.myGetSecretAction.outputs.azure-vmss-name }} -g ${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }} --scripts "@workloads\ImageserverPwrscrpt\Powershell.ps1" --instance-id $vmssinstanceId[0]
+
