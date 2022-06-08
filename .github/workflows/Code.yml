@@ -29,12 +29,7 @@ jobs:
         id: myGetSecretAction
       
 
-      #- name: Deleting IntactixImageServer.config File From the Azure File Storage.
-       # uses: azure/CLI@v1
-        #with:
-         # azcliversion: 2.30.0
-         # inlineScript: |
-          #  az storage file delete --paths IntactixImageServer.config --share-name imageserver --account-key  ${{ steps.myGetSecretAction.outputs.access-key }} --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }}
+      
  
       - name: Uploading IntactixImageServer.config File to the Azure File Storage.
         uses: azure/CLI@v1   
@@ -44,3 +39,9 @@ jobs:
             chmod +x $GITHUB_WORKSPACE
             az storage file upload --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }} --account-key ${{ steps.myGetSecretAction.outputs.access-key }} --share-name imageserver --path IntactixImageServer.config --source $GITHUB_WORKSPACE/workloads/imageserver/IntactixImageServer.config
      
+      - name: Deleting IntactixImageServer.config File From the Azure File Storage.
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+           az storage file delete --paths IntactixImageServer.config --share-name imageserver --account-key  ${{ steps.myGetSecretAction.outputs.access-key }} --account-name ${{ steps.myGetSecretAction.outputs.azure-infra-storage-acct-name }}
