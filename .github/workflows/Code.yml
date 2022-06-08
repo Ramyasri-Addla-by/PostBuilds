@@ -50,7 +50,7 @@ jobs:
           az vm show --name Vm1 --resource-group rg1
         
           az vm run-command invoke\
-          --resource-group 'rg1' \
+          --resource-group 'rg1'\
           --name 'Vm1' \
           --command-id 'RunPowerShellScript' \
           --scripts @workloads\ImageserverPwrscrpt\Powershell.ps1
