@@ -1,6 +1,12 @@
-$StorageAccName= "str13"
-$FileShareName="imageserver"
-$DownloadFileName="IntactixImageServer.config"
+$StorageAccountName = $env:StorageAccountName
+$fileShareName = $env:fileShareName
+#shared access signature for storage account
+$sas = $env:sas
+
+
+#$StorageAccName= "str13"
+#$FileShareName="imageserver"
+#$DownloadFileName="IntactixImageServer.config"
 
 $Url = "https://"+$StorageAccName+".file.core.windows.net/"+$FileShareName+"/"+$DownloadFileName
 
