@@ -48,8 +48,8 @@ jobs:
         shell: pwsh
         run: |
          ls ${{github.workspace}}
-         az vm run-command invoke --resource-group 'rg1' --name 'VmTest' --command-id 'RunPowerShellScript' --scripts ${{github.workspace}}\.github\workflows\Powershell.ps1
-
+        #az vm run-command invoke --resource-group 'rg1' --name 'VmTest' --command-id 'RunPowerShellScript' --scripts ${{github.workspace}}\.github\workflows\Powershell.ps1
+         Invoke-AzVMRunCommand -ResourceGroupName rg1 -Name VmTest -CommandId 'RunPowerShellScript' -ScriptPath '${{github.workspace}}\.github\workflows\Powershell.ps1'
         #$vmssinstanceId=az vmss list-instances -g ${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }} -n ${{ steps.myGetSecretAction.outputs.azure-vmss-name }} --query "[].[instanceId]" -o tsv
         #az vmss run-command invoke --command-id RunPowerShellScript -n ${{ steps.myGetSecretAction.outputs.azure-vmss-name }} -g ${{ steps.myGetSecretAction.outputs.azure-infra-resource-group-name }} --scripts "@workloads\ImageserverPwrscrpt\Powershell.ps1" --instance-id $vmssinstanceId[0]
         #az vm show --name VmTest --resource-group rg1
